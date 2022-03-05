@@ -45,10 +45,10 @@ class FileUploader  {
                                    @NonNull Response<UploadResponse> response) {
 
                 if (response != null && response.code() == 200) {
-                    if (response.body().getSuccess().equalsIgnoreCase("1")) {
-                        mFileUploaderCallback.onFinish(response.body().getMessage());
-                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
-                    }
+//                    if (response.body().getSuccess().equalsIgnoreCase("1")) {
+                        mFileUploaderCallback.onFinish(response.body().getFileDownloadUri());
+                        Toast.makeText(context, response.body().getFileDownloadUri(), Toast.LENGTH_LONG).show();
+//                    }
 
                 }
 

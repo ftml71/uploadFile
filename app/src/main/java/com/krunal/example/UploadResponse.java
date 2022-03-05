@@ -5,27 +5,58 @@ import com.google.gson.annotations.SerializedName;
 
 public class UploadResponse {
 
-    @SerializedName("success")
-    @Expose
-    private String success;
-    @SerializedName("message")
-    @Expose
-    private String message;
+    String fileDownloadUri;
+    String fileName;
+    String fileType;
+    int id;
+    int size;
+    String time;
 
-    public String getSuccess() {
-        return success;
+    public String getFileDownloadUri() {
+        return fileDownloadUri;
     }
 
-    public void setSuccess(String success) {
-        this.success = success;
+    public void setFileDownloadUri(String fileDownloadUri) {
+        this.fileDownloadUri = fileDownloadUri;
     }
 
-    public String getMessage() {
-        return message;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 }
