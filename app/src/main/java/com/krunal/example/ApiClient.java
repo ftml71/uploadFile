@@ -9,26 +9,18 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-
-    private static final String BASE_URL = "http://192.168.1.55:92/api/";
+    private static final String BASE_URL = "https://fb1.dariarnd.ir/api/";
     private static Retrofit retrofit;
-
-
     public static Retrofit getRetrofitInstance() {
-
-//        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-//        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging).build();
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
+                .client(httpClient.build())
+                .build();
         return retrofit;
     }
-
-
-
 }

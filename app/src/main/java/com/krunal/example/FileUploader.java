@@ -29,57 +29,14 @@ class FileUploader  {
 
     FileUploader(File file, Context context) {
         filesize = file.length();
-        Log.e("--URL--", "filesize: " + filesize);
 
         InterfaceFileUpload interfaceFileUpload = ApiClient.getRetrofitInstance()
                 .create(InterfaceFileUpload.class);
 
-        Log.e("--URL--", "interfaceDesignation: " + interfaceFileUpload.toString());
-
-//        RequestBody mFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-
         PRRequestBody mFile = new PRRequestBody(file);
         MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file",
                 file.getName(), mFile);
-
-        ///RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
-
-        RequestBody CustomerID = RequestBody.create(
-                okhttp3.MultipartBody.FORM, "CIK002");
-
-        RequestBody BackupType = RequestBody.create(
-                okhttp3.MultipartBody.FORM, "Document");
-
-        RequestBody ProductName = RequestBody.create(
-                okhttp3.MultipartBody.FORM, "Retail");
-
-        RequestBody AppVersionAppVersion = RequestBody.create(
-                okhttp3.MultipartBody.FORM, "1.22.3");
-
-        RequestBody AppType = RequestBody.create(
-                okhttp3.MultipartBody.FORM, "Mobile");
-
-        RequestBody IMEINumber = RequestBody.create(
-                okhttp3.MultipartBody.FORM, "23234234");
-
-        RequestBody DeviceInfo = RequestBody.create(
-                okhttp3.MultipartBody.FORM, "Motorola");
-
-        RequestBody Remark = RequestBody.create(
-                okhttp3.MultipartBody.FORM, "@Backup");
-
-        RequestBody FileName = RequestBody.create(
-                okhttp3.MultipartBody.FORM, "@SHAP_Backup");
-
-        RequestBody Extentsion = RequestBody.create(
-                okhttp3.MultipartBody.FORM, ".zip");
-
-        Call<UploadResponse> fileUpload = interfaceFileUpload.UploadFile(fileToUpload,CustomerID,BackupType,
-                ProductName,AppVersionAppVersion,AppType,IMEINumber,DeviceInfo,Remark,FileName,Extentsion);
-
-
-        Log.e("--URL--", "************************  before call : " +
-                fileUpload.request().url());
+        Call<UploadResponse> fileUpload = interfaceFileUpload.UploadFile(fileToUpload);
 
         fileUpload.enqueue(new Callback<UploadResponse>() {
 
@@ -88,9 +45,6 @@ class FileUploader  {
                                    @NonNull Response<UploadResponse> response) {
 
                 if (response != null && response.code() == 200) {
-                    Log.e("getResponse", "--Response:-" + response.message());
-                    Log.e("getResponse", "--Response:-" + response.body().toString());
-
                     if (response.body().getSuccess().equalsIgnoreCase("1")) {
                         mFileUploaderCallback.onFinish(response.body().getMessage());
                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
